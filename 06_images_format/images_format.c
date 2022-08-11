@@ -29,13 +29,13 @@ SDL_Surface *load_surface(const char *path, const SDL_Surface *base)
 
 int main(int argc, char *argv[])
 {
-  SDL_Window *window = NULL;
-  SDL_Surface *surface = NULL;
-  SDL_Surface *image = NULL;
-  // Main loop flag
-  uint8_t quit = 0; // false
-  // Event handle
-  SDL_Event e;
+	SDL_Window *window = NULL;
+	SDL_Surface *surface = NULL;
+	SDL_Surface *image = NULL;
+	// Main loop flag
+	uint8_t quit = 0; // false
+	// Event handle
+	SDL_Event e;
 	// Apply the image stretched
 	SDL_Rect stretch_rect;
 	stretch_rect.x = 0;
@@ -43,21 +43,21 @@ int main(int argc, char *argv[])
 	stretch_rect.w = WINDOW_WIDTH;
 	stretch_rect.h = WINDOW_HEIGHT;
 
-  // Initialize SDL
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    fprintf(stderr, "SDL initialize failed: %s\n", SDL_GetError());
-    return -1;
-  }
+	// Initialize SDL
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		fprintf(stderr, "SDL initialize failed: %s\n", SDL_GetError());
+		return -1;
+	}
 
-  // Create window
-  window = SDL_CreateWindow("Load Image",
-														SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-														WINDOW_WIDTH, WINDOW_HEIGHT,
-														SDL_WINDOW_SHOWN);
-  if (NULL == window) {
-    fprintf(stderr, "SDL create window failed: %s\n", SDL_GetError());
-    goto error_create_window;
-  }
+	// Create window
+	window = SDL_CreateWindow("Load Image",
+				  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+				  WINDOW_WIDTH, WINDOW_HEIGHT,
+				  SDL_WINDOW_SHOWN);
+	if (NULL == window) {
+		fprintf(stderr, "SDL create window failed: %s\n", SDL_GetError());
+		goto error_create_window;
+	}
 
 	// Initialize PNG loading
 	int flags = IMG_INIT_PNG;
@@ -66,46 +66,46 @@ int main(int argc, char *argv[])
 		goto error_image_init;
 	}
 
-  // Get window surface
-  surface = SDL_GetWindowSurface(window);
+	// Get window surface
+	surface = SDL_GetWindowSurface(window);
 
-  // Fill the surface white
-  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
+	// Fill the surface white
+	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
 
-  // Load image
-  image = load_surface("./loaded.png", surface);
-  if (NULL == image) {
-    fprintf(stderr, "SDL load bmp image failed: %s\n", SDL_GetError());
-    goto error_load_bmp;
-  }
+	// Load image
+	image = load_surface("./loaded.png", surface);
+	if (NULL == image) {
+		fprintf(stderr, "SDL load bmp image failed: %s\n", SDL_GetError());
+		goto error_load_bmp;
+	}
 
-  while (!quit) {
-    while (SDL_PollEvent(&e) != 0) {
-      switch (e.type) {
-      case SDL_QUIT:
+	while (!quit) {
+		while (SDL_PollEvent(&e) != 0) {
+			switch (e.type) {
+			case SDL_QUIT:
 				quit = 1;
 				break;
-      default:
+			default:
 				break;
-      }
-    }
+			}
+		}
 
-    // Apply the image
-    SDL_BlitScaled(image, NULL, surface, &stretch_rect);
+		// Apply the image
+		SDL_BlitScaled(image, NULL, surface, &stretch_rect);
 
-    // Update the surface
-    SDL_UpdateWindowSurface(window);
-  }
+		// Update the surface
+		SDL_UpdateWindowSurface(window);
+	}
 
-  SDL_FreeSurface(image);
-  image = NULL;
+	SDL_FreeSurface(image);
+	image = NULL;
 error_load_bmp:
 error_image_init:
-  // Destroy window
-  SDL_DestroyWindow(window);
+	// Destroy window
+	SDL_DestroyWindow(window);
 error_create_window:
-  // Quit SDL subsystems
-  SDL_Quit();
+	// Quit SDL subsystems
+	SDL_Quit();
 
-  return 0;
+	return 0;
 }
