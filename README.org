@@ -1,3 +1,5 @@
 * SDL2 Demo
 
-[[https://lazyfoo.net/tutorials/SDL/index.php][Lazy Foo' Productions]]
+* Reference
+- [[https://www.libsdl.org/index.php][SDL Homepage]]
+- [[https://lazyfoo.net/tutorials/SDL/index.php][Lazy Foo' Productions]]
